@@ -3,7 +3,7 @@ package mma.legacy.interval;
 
 /**
  * Esta clase abstracta se ha creado por comodidad. 
- * Crea automáticamente intervalos
+ * Crea automaticamente intervalos
  * @author Agustin
  *
  */

@@ -8,15 +8,15 @@ package mma.legacy.interval;
  */
 public class Interval {
 
-	private double minimum;  // número entero que indica el limite superior del intervalo
-	private double maximum;  // número entero que indica el limite superior del intervalo
+	private double minimum;  // numero entero que indica el limite superior del intervalo
+	private double maximum;  // numero entero que indica el limite superior del intervalo
 	private Opening opening; // enum que indica el tipo de intervalo de los 4 posibles.
 
 	/**
-	 * Construye un objeto intervalo dado su maximo / mínimo y el tipo de intervalo.
-	 * Todos los parámetrso pueden ser nulos, se especifica el minimo, máximo y el tipo de intervalo.
-	 * @param minimum valor mínimo del intervalo
-	 * @param maximum valor máximo del intervalo
+	 * Construye un objeto intervalo dado su maximo / minimo y el tipo de intervalo.
+	 * Todos los parametros pueden ser nulos, se especifica el minimo, maximo y el tipo de intervalo.
+	 * @param minimum valor minimo del intervalo
+	 * @param maximum valor maximo del intervalo
 	 * @param opening tipo de intervalo
 	 */
 	public Interval(double minimum, double maximum, Opening opening) {
@@ -27,7 +27,7 @@ public class Interval {
 	}
 
 	/**
-	 * Este metodo calcula el punto medio de un intervalo
+	 * Devuelve el punto medio del intervalo
 	 *
 	 * @return el punto medio del intervalo
 	 */
@@ -36,13 +36,13 @@ public class Interval {
 	}
 
 	/**
-	 * Indica si el numero por parametro esta dentro del intervalo.
+	 * Indica si un numero dado se encuentra dentro del interval.
 	 *
 	 * @param value numero a verificar si esta en el itervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
 	public boolean includes(double value) {
-		System.out.print("Entro en el método");
+		System.out.print("Entro en el metodo");
 		switch (opening) {
 			case BOTH_OPENED:
 				return minimum < value && value < maximum;
@@ -61,7 +61,7 @@ public class Interval {
 	/**
 	 * Indica si un intervalo esta dentro de otro intervalo
 	 *
-	 * @param interval interval a verificar si esta dentro del intervalo
+	 * @param interval intervalo a verificar si esta dentro del intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
 	public boolean includes(Interval interval) {
@@ -142,10 +142,11 @@ public class Interval {
 	}
 
 	/**
-	 * Este método calcula el ancho de un intervalo
+	 * Indica si un intervalo se "intersecta" con otro intervalo
+	 * Se considera que intersecta si uno de los limites está dentro del intervalo, y el otro fuera
 	 *
-	 * @param interval
-	 * @return
+	 * @param interval intervalo a verificar si intersecta con el intervalo
+	 * @return true si esta en el intervalo, false en caso contrario
 	 */
 
 	public boolean intersectsWith(Interval interval) {
