@@ -14,3 +14,5 @@ cache:
   directories:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
+notifications:
+  slack: 'mma-20162017:USiQRxtAva8gFN3xVFNNxC10'
