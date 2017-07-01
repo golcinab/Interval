@@ -102,7 +102,7 @@ public class Interval {
 	 * @return true si son iguales, false en caso contrario
 	 */
 	private boolean doubleEquals(double value1, double value2){
-		return (Double.compare(value1, value2) == 0);
+		return Double.compare(value1, value2) == 0;
 	}
 	/**
 	 * Indica si un intervalo esta dentro de otro intervalo
