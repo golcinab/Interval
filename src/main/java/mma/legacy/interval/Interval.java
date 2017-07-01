@@ -56,7 +56,7 @@ public class Interval {
 
 	/**
 	 * Verifica si un numero esta por debajo del limite superior
-	 * @param value
+	 * @param value valor a verificar
 	 * @return true si esta por debajo, false en caso contrario
 	 */
 	private boolean isUnderMaximunLimit(double value){
@@ -77,7 +77,7 @@ public class Interval {
 
 	/**
 	 * Verifica si un numero esta por encima del limite inferior
-	 * @param value
+	 * @param value valora a verificar
 	 * @return true si esta por encima, falso en caso contrario
 	 */
 	private boolean isOverMinimunLimit(double value) {
@@ -197,7 +197,6 @@ public class Interval {
 					return false;
 			}
 		}
-		return this.isNumberIncluded(interval.minimum)
-				|| this.isNumberIncluded(interval.maximum);
+		return this.isNumberIncluded(interval.minimum) || this.isNumberIncluded(interval.maximum);
 	}
 }
