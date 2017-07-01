@@ -103,7 +103,7 @@ public class Interval {
 	 * @param interval intervalo a verificar si esta dentro del intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
-	public boolean isNumberIncluded(Interval interval) {
+	public boolean isIntervalIncluded(Interval interval) {
 		boolean minimumIncluded = this.isNumberIncluded(interval.minimum);
 		boolean maximumIncluded = this.isNumberIncluded(interval.maximum);
 		switch (opening) {
@@ -187,7 +187,6 @@ public class Interval {
 	 * @param interval intervalo a verificar si intersecta con el intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
-
 	public boolean intersectsWith(Interval interval) {
 		if (minimum == interval.maximum) {
 			switch (opening) {
