@@ -130,9 +130,6 @@ public class Interval {
 					case UNOPENED:
 						result =  (minimumIncluded) && (maximumIncluded);
 						break;
-					default:
-						result = false;
-						break;
 				}
 				break;
 
@@ -154,10 +151,6 @@ public class Interval {
 
 			case UNOPENED:
 				result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
-				break;
-
-			default:
-				result = false;
 				break;
 		}
 		return result;
