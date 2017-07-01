@@ -15,7 +15,6 @@ public class Interval {
 	private double minimum;  // numero entero que indica el limite superior del intervalo
 	private double maximum;  // numero entero que indica el limite superior del intervalo
 
-
 	private Opening opening; // enum que indica el tipo de intervalo de los 4 posibles.
 
 	/**
@@ -227,17 +226,4 @@ public class Interval {
 		return this.isNumberIncluded(interval.minimum)
 				|| this.isNumberIncluded(interval.maximum);
 	}
-
-	@Override
-	public String toString() {
-		// TODO
-		return null;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		// TODO
-		return false;
-	}
-
 }
