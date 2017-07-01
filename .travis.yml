@@ -15,4 +15,8 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 notifications:
-  slack: 'mma-20162017:USiQRxtAva8gFN3xVFNNxC10'
+  slack:
+    rooms:
+      - mma-20162017:USiQRxtAva8gFN3xVFNNxC10
+    on_success: change
+    on_failure: always
