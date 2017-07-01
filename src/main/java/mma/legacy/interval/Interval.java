@@ -1,6 +1,5 @@
 package mma.legacy.interval;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -11,7 +10,7 @@ import org.apache.log4j.Logger;
  */
 public class Interval {
 	// Creamos el logger del proyecto
-	static private Logger logger = Logger.getLogger(Interval.class);
+	private static Logger logger = Logger.getLogger(Interval.class);
 
 	private double minimum;  // numero entero que indica el limite superior del intervalo
 	private double maximum;  // numero entero que indica el limite superior del intervalo
@@ -20,6 +19,7 @@ public class Interval {
 	/**
 	 * Construye un objeto intervalo dado su maximo / minimo y el tipo de intervalo.
 	 * Todos los parametros pueden ser nulos, se especifica el minimo, maximo y el tipo de intervalo.
+	 *
 	 * @param minimum valor minimo del intervalo
 	 * @param maximum valor maximo del intervalo
 	 * @param opening tipo de intervalo
