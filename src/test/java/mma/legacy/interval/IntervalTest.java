@@ -4,11 +4,13 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
+
 
 public class IntervalTest {
 
@@ -166,8 +168,7 @@ public class IntervalTest {
 	}
 
 	@Test
-	public void includeIntervalTest() {
-
+	public void validar_si_intervalo_dentro_de_intervalo_ambos_abiertos(){
 		Interval bothOpenedPivot = IntervalFactory.createInterval(20, 35, Opening.BOTH_OPENED);
 		assertFalse(bothOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(10, 15, Opening.BOTH_OPENED)));
 		assertFalse(bothOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(15, 20, Opening.BOTH_OPENED)));
@@ -197,6 +198,10 @@ public class IntervalTest {
 		assertFalse(bothOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(30, 35, Opening.UNOPENED)));
 		assertFalse(bothOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(35, 40, Opening.UNOPENED)));
 		assertFalse(bothOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(40, 45, Opening.UNOPENED)));
+	}
+
+	@Test
+	public void validar_si_intervalo_dentro_de_intervalo_inferior_abierto(){
 		Interval leftOpenedPivot = IntervalFactory.createInterval(20, 35, Opening.LEFT_OPENED);
 		assertFalse(leftOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(10, 15, Opening.BOTH_OPENED)));
 		assertFalse(leftOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(15, 20, Opening.BOTH_OPENED)));
@@ -226,6 +231,10 @@ public class IntervalTest {
 		assertTrue(leftOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(30, 35, Opening.UNOPENED)));
 		assertFalse(leftOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(35, 40, Opening.UNOPENED)));
 		assertFalse(leftOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(40, 45, Opening.UNOPENED)));
+	}
+
+	@Test
+	public void validar_si_intervalo_dentro_de_intervalo_limite_superior_abierto(){
 		Interval rightOpenedPivot = IntervalFactory.createInterval(20, 35, Opening.RIGHT_OPENED);
 		assertFalse(rightOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(10, 15, Opening.BOTH_OPENED)));
 		assertFalse(rightOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(15, 20, Opening.BOTH_OPENED)));
@@ -255,6 +264,10 @@ public class IntervalTest {
 		assertFalse(rightOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(30, 35, Opening.UNOPENED)));
 		assertFalse(rightOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(35, 40, Opening.UNOPENED)));
 		assertFalse(rightOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(40, 45, Opening.UNOPENED)));
+	}
+
+	@Test
+	public void validar_si_intervalo_dentro_de_intervalo_ambos_limites_cerrados(){
 		Interval unopenedOpenedPivot = IntervalFactory.createInterval(20, 35, Opening.UNOPENED);
 		assertFalse(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(10, 15, Opening.BOTH_OPENED)));
 		assertFalse(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(15, 20, Opening.BOTH_OPENED)));
@@ -277,7 +290,6 @@ public class IntervalTest {
 		assertTrue(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(30, 35, Opening.RIGHT_OPENED)));
 		assertFalse(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(35, 40, Opening.RIGHT_OPENED)));
 		assertFalse(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(40, 45, Opening.RIGHT_OPENED)));
-
 		assertFalse(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(10, 15, Opening.UNOPENED)));
 		assertFalse(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(15, 20, Opening.UNOPENED)));
 		assertTrue(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(20, 25, Opening.UNOPENED)));
@@ -285,7 +297,6 @@ public class IntervalTest {
 		assertTrue(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(30, 35, Opening.UNOPENED)));
 		assertFalse(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(35, 40, Opening.UNOPENED)));
 		assertFalse(unopenedOpenedPivot.isIntervalIncluded(IntervalFactory.createInterval(40, 45, Opening.UNOPENED)));
-
 	}
 
 	@Test
