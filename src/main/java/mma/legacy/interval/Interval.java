@@ -137,7 +137,7 @@ public class Interval {
 
 			case LEFT_OPENED:
 				if( interval.isOpenMinLimit()){
-					result =  (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
+					result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 				} else{
 					result = (minimumIncluded) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 				}
