@@ -9,7 +9,21 @@ package mma.legacy.interval;
  */
 public class IntervalFactory {
 
-	public static Interval getInterval(double minimum, double maximum, Opening opening) {
+	/**
+	 * Ocultar constructor publico de clase de utilidades
+	 */
+	private IntervalFactory(){
+		throw new IllegalStateException("Clase de utilidades");
+	}
+
+	/**
+	 * Creacion de intervalo indicando los limites y el tipo de intervalo como parametro
+	 * @param minimum limite inferior
+	 * @param maximum limite superior
+	 * @param opening tipo de intervalo
+	 * @return devuelve el intervalo creado.
+	 */
+	public static Interval createInterval(double minimum, double maximum, Opening opening) {
 		return new Interval(minimum, maximum, opening);
 	}
 }
