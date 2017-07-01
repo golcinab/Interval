@@ -1,8 +1,8 @@
-##Interval
+# Interval
 
 Aplicación de intervalos de practica de legacy code del MMA-2017
 
-##Authors
+# Authors
 
 * Carolina Graffe
 * Jaime Ruiz
