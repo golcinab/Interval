@@ -16,14 +16,15 @@ public class IntervalTest {
 	private static final Logger logger = Logger.getLogger(Interval.class);
 
 	/**
-	 * Configuramos el logger al inicio de los tests.
+	 * Configuración inicial del logger.
 	 */
 	@BeforeClass
 	public static void setUpClass(){
 		BasicConfigurator.configure();
 	}
 	/**
-	 * Se introduce en la validación tanto el caso positivo como el control de los limites de equivalencia
+	 * Tests de calculo punto medio
+	 * Se introduce en la validacion tanto el caso positivo como el control de los limites de equivalencia
 	 */
 	@Test
 	public void calcular_punto_medio_intervalo_positivo_ambos_limites_abiertos() {
@@ -98,27 +99,71 @@ public class IntervalTest {
 	}
 
 	@Test
-	public void includeValueTest() {
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.BOTH_OPENED).includes(-3));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.LEFT_OPENED).includes(-3));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.RIGHT_OPENED).includes(-3));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.UNOPENED).includes(-3));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.BOTH_OPENED).includes(0));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.LEFT_OPENED).includes(0));
-		assertTrue(IntervalFactory.getInterval(0, 10, Opening.RIGHT_OPENED).includes(0));
-		assertTrue(IntervalFactory.getInterval(0, 10, Opening.UNOPENED).includes(0));
-		assertTrue(IntervalFactory.getInterval(0, 10, Opening.BOTH_OPENED).includes(5));
-		assertTrue(IntervalFactory.getInterval(0, 10, Opening.LEFT_OPENED).includes(5));
-		assertTrue(IntervalFactory.getInterval(0, 10, Opening.RIGHT_OPENED).includes(5));
-		assertTrue(IntervalFactory.getInterval(0, 10, Opening.UNOPENED).includes(5));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.BOTH_OPENED).includes(10));
-		assertTrue(IntervalFactory.getInterval(0, 10, Opening.LEFT_OPENED).includes(10));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.RIGHT_OPENED).includes(10));
-		assertTrue(IntervalFactory.getInterval(0, 10, Opening.UNOPENED).includes(10));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.BOTH_OPENED).includes(13));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.LEFT_OPENED).includes(13));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.RIGHT_OPENED).includes(13));
-		assertFalse(IntervalFactory.getInterval(0, 10, Opening.UNOPENED).includes(13));
+	public void calcular_punto_medio_intervalo_positivo_ambos_cerrados() {
+		Interval interval = IntervalFactory.getInterval(0, 10, Opening.UNOPENED);
+		assertThat(interval.calculateMiddle(), is(5.0));
+		assertThat(interval.calculateMiddle(), not(4.0));
+		assertThat(interval.calculateMiddle(), not(6.0));
+	}
+
+	@Test
+	public void calcular_punto_medio_intervalo_mixto_ambos_cerrados() {
+		Interval interval = IntervalFactory.getInterval(-10, 10, Opening.UNOPENED);
+		assertThat(interval.calculateMiddle(), is(0.0));
+		assertThat(interval.calculateMiddle(), not(-1.0));
+		assertThat(interval.calculateMiddle(), not(1.0));
+	}
+
+	@Test
+	public void calcular_punto_medio_intervalo_negativo_ambos_cerrados() {
+		Interval interval = IntervalFactory.getInterval(-15, -5, Opening.UNOPENED);
+		assertThat(interval.calculateMiddle(), is(-10.0));
+		assertThat(interval.calculateMiddle(), not(-9.0));
+		assertThat(interval.calculateMiddle(), not(-11.0));
+	}
+
+	/**
+	 * Tests de validacion dentro de intervalo de un numero
+	 * Incluimos para cada test los valores de equivalencia
+	 */
+	@Test
+	public void validar_si_numero_esta_dentro_de_intervalo_ambos_limites_abiertos(){
+		Interval interval = IntervalFactory.getInterval(0, 10, Opening.BOTH_OPENED);
+		assertThat(interval.includes(-3), is(false));
+		assertThat(interval.includes(0), is(false));
+		assertThat(interval.includes(5), is(true));
+		assertThat(interval.includes(10), is(false));
+		assertThat(interval.includes(13), is(false));
+	}
+
+	@Test
+	public void validar_si_numero_esta_dentro_de_intervalo_limite_inferior_abierto(){
+		Interval interval = IntervalFactory.getInterval(0, 10, Opening.LEFT_OPENED);
+		assertThat(interval.includes(-3), is(false));
+		assertThat(interval.includes(0), is(false));
+		assertThat(interval.includes(5), is(true));
+		assertThat(interval.includes(10), is(true));
+		assertThat(interval.includes(13), is(false));
+	}
+
+	@Test
+	public void validar_si_numero_esta_dentro_de_intervalo_limite_superior_abierto(){
+		Interval interval = IntervalFactory.getInterval(0, 10, Opening.RIGHT_OPENED);
+		assertThat(interval.includes(-3), is(false));
+		assertThat(interval.includes(0), is(true));
+		assertThat(interval.includes(5), is(true));
+		assertThat(interval.includes(10), is(false));
+		assertThat(interval.includes(13), is(false));
+	}
+
+	@Test
+	public void validar_si_numero_esta_dentro_de_intervalo_ambos_cerrados(){
+		Interval interval = IntervalFactory.getInterval(0, 10, Opening.UNOPENED);
+		assertThat(interval.includes(-3), is(false));
+		assertThat(interval.includes(0), is(true));
+		assertThat(interval.includes(5), is(true));
+		assertThat(interval.includes(10), is(true));
+		assertThat(interval.includes(13), is(false));
 	}
 
 	@Test

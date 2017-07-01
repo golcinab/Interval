@@ -14,6 +14,8 @@ public class Interval {
 
 	private double minimum;  // numero entero que indica el limite superior del intervalo
 	private double maximum;  // numero entero que indica el limite superior del intervalo
+
+
 	private Opening opening; // enum que indica el tipo de intervalo de los 4 posibles.
 
 	/**
