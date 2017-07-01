@@ -112,18 +112,21 @@ public class Interval {
 	public boolean isIntervalIncluded(Interval interval) {
 		boolean minimumIncluded = this.isNumberIncluded(interval.minimum);
 		boolean maximumIncluded = this.isNumberIncluded(interval.maximum);
+
+		boolean result = false;
+
 		switch (opening) {
 			case BOTH_OPENED:
 				switch (interval.opening) {
 					case BOTH_OPENED:
-						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum) )
-								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum ));
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case LEFT_OPENED:
 						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
 								&& (maximumIncluded);
 					case RIGHT_OPENED:
 						return (minimumIncluded)
-								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum ));
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case UNOPENED:
 						return (minimumIncluded) && (maximumIncluded);
 					default:
@@ -133,8 +136,7 @@ public class Interval {
 			case LEFT_OPENED:
 				switch (interval.opening) {
 					case BOTH_OPENED:
-						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
-								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case LEFT_OPENED:
 						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case RIGHT_OPENED:
@@ -147,24 +149,15 @@ public class Interval {
 						assert false;
 						return false;
 				}
+
 			case RIGHT_OPENED:
-				switch (interval.opening) {
-					case BOTH_OPENED:
-						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
-								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
-					case LEFT_OPENED:
-						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
-								&& (maximumIncluded);
-					case RIGHT_OPENED:
-						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
-								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
-					case UNOPENED:
-						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
-								&& (maximumIncluded);
-					default:
-						assert false;
-						return false;
+				if (interval.isOpenMaxLimit()) {
+					result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
+				}else{
+					result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded);
 				}
+				return result;
+
 			case UNOPENED:
 				return (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 
