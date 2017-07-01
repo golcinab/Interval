@@ -98,6 +98,13 @@ public class Interval {
 	}
 
 	/**
+	 * Comparamos si dos double son iguales
+	 * @return true si son iguales, false en caso contrario
+	 */
+	private boolean doubleEquals(double value1, double value2){
+		return (Double.compare(value1, value2) == 0);
+	}
+	/**
 	 * Indica si un intervalo esta dentro de otro intervalo
 	 *
 	 * @param interval intervalo a verificar si esta dentro del intervalo
@@ -110,14 +117,15 @@ public class Interval {
 			case BOTH_OPENED:
 				switch (interval.opening) {
 					case BOTH_OPENED:
-						return (minimumIncluded || minimum == interval.minimum)
-								&& (maximumIncluded || maximum == interval.maximum);
+
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum) )
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum ));
 					case LEFT_OPENED:
-						return (minimumIncluded || minimum == interval.minimum)
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
 								&& (maximumIncluded);
 					case RIGHT_OPENED:
 						return (minimumIncluded)
-								&& (maximumIncluded || maximum == interval.maximum);
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum ));
 					case UNOPENED:
 						return (minimumIncluded) && (maximumIncluded);
 					default:
@@ -127,16 +135,16 @@ public class Interval {
 			case LEFT_OPENED:
 				switch (interval.opening) {
 					case BOTH_OPENED:
-						return (minimumIncluded || minimum == interval.minimum)
-								&& (maximumIncluded || maximum == interval.maximum);
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case LEFT_OPENED:
-						return (minimumIncluded || minimum == interval.minimum) && (maximumIncluded || maximum == interval.maximum);
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case RIGHT_OPENED:
 						return (minimumIncluded)
-								&& (maximumIncluded || maximum == interval.maximum);
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case UNOPENED:
 						return (minimumIncluded)
-								&& (maximumIncluded || maximum == interval.maximum);
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					default:
 						assert false;
 						return false;
@@ -144,16 +152,16 @@ public class Interval {
 			case RIGHT_OPENED:
 				switch (interval.opening) {
 					case BOTH_OPENED:
-						return (minimumIncluded || minimum == interval.minimum)
-								&& (maximumIncluded || maximum == interval.maximum);
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case LEFT_OPENED:
-						return (minimumIncluded || minimum == interval.minimum)
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
 								&& (maximumIncluded);
 					case RIGHT_OPENED:
-						return (minimumIncluded || minimum == interval.minimum)
-								&& (maximumIncluded || maximum == interval.maximum);
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case UNOPENED:
-						return (minimumIncluded || minimum == interval.minimum)
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
 								&& (maximumIncluded);
 					default:
 						assert false;
@@ -162,14 +170,14 @@ public class Interval {
 			case UNOPENED:
 				switch (interval.opening) {
 					case BOTH_OPENED:
-						return (minimumIncluded || minimum == interval.minimum) && (maximumIncluded || maximum == interval.maximum);
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case LEFT_OPENED:
-						return (minimumIncluded || minimum == interval.minimum)
-								&& (maximumIncluded || maximum == interval.maximum);
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum))
+								&& (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case RIGHT_OPENED:
-						return (minimumIncluded || minimum == interval.minimum) && (maximumIncluded || maximum == interval.maximum);
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					case UNOPENED:
-						return (minimumIncluded || minimum == interval.minimum) && (maximumIncluded || maximum == interval.maximum);
+						return (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 					default:
 						assert false;
 						return false;
@@ -188,7 +196,7 @@ public class Interval {
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
 	public boolean intersectsWith(Interval interval) {
-		if (minimum == interval.maximum) {
+		if ( this.doubleEquals(minimum, interval.maximum))  {
 			switch (opening) {
 				case BOTH_OPENED:
 				case LEFT_OPENED:
@@ -202,7 +210,7 @@ public class Interval {
 					return false;
 			}
 		}
-		if (maximum == interval.minimum) {
+		if ( this.doubleEquals(maximum, interval.minimum)) {
 			switch (opening) {
 				case BOTH_OPENED:
 				case RIGHT_OPENED:
