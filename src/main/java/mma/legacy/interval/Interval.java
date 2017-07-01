@@ -1,5 +1,8 @@
 package mma.legacy.interval;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 /**
  * Clase para el ejemplo de trabajo con Legacy
  *
@@ -7,6 +10,8 @@ package mma.legacy.interval;
  *         Controla operaciones sobre intervalos que pudeen ser abiertos o cerrados
  */
 public class Interval {
+	// Creamos el logger del proyecto
+	static private Logger logger = Logger.getLogger(Interval.class);
 
 	private double minimum;  // numero entero que indica el limite superior del intervalo
 	private double maximum;  // numero entero que indica el limite superior del intervalo
@@ -23,7 +28,8 @@ public class Interval {
 		this.minimum = minimum;
 		this.maximum = maximum;
 		this.opening = opening;
-		System.out.println("Objeto creado");
+
+		logger.debug("Objeto creado");
 	}
 
 	/**
@@ -42,7 +48,8 @@ public class Interval {
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
 	public boolean includes(double value) {
-		System.out.print("Entro en el metodo");
+		logger.debug("Entro en el metodo");
+
 		switch (opening) {
 			case BOTH_OPENED:
 				return minimum < value && value < maximum;
