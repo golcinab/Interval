@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
  */
 public class Interval {
 	// Creamos el logger del proyecto
-	private static Logger logger = Logger.getLogger(Interval.class);
+	private static final Logger logger = Logger.getLogger(Interval.class);
 
 	private double minimum;  // numero entero que indica el limite superior del intervalo
 	private double maximum;  // numero entero que indica el limite superior del intervalo
@@ -37,7 +37,7 @@ public class Interval {
 	 *
 	 * @return el punto medio del intervalo
 	 */
-	public double midPoint() {
+	public double calculateMiddle() {
 		return (maximum + minimum) / 2;
 	}
 

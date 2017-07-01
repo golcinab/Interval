@@ -1,94 +1,100 @@
 package mma.legacy.interval;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
-import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
-import mma.legacy.interval.Interval;
-import mma.legacy.interval.IntervalFactory;
-import mma.legacy.interval.Opening;
-
-import org.junit.Test;
-import org.omg.PortableInterceptor.INACTIVE;
-
-import java.nio.DoubleBuffer;
-
 public class IntervalTest {
 
+	private static final Logger logger = Logger.getLogger(Interval.class);
+
+	/**
+	 * Configuramos el logger al inicio de los tests.
+	 */
+	@BeforeClass
+	public static void setUpClass(){
+		BasicConfigurator.configure();
+	}
 	/**
 	 * Se introduce en la validación tanto el caso positivo como el control de los limites de equivalencia
 	 */
 	@Test
 	public void calcular_punto_medio_intervalo_positivo_ambos_limites_abiertos() {
 		Interval interval = IntervalFactory.getInterval(0, 10, Opening.BOTH_OPENED);
-		assertThat(interval.midPoint(), is(5.0));
-		assertThat(interval.midPoint(), not(4.0));
-		assertThat(interval.midPoint(), not(6.0));
+		assertThat(interval.calculateMiddle(), is(5.0));
+		assertThat(interval.calculateMiddle(), not(4.0));
+		assertThat(interval.calculateMiddle(), not(6.0));
 	}
 
 	@Test
 	public void calcular_punto_medio_intervalo_mixto_ambos_limites_abiertos() {
 		Interval interval = IntervalFactory.getInterval(-10, 10, Opening.BOTH_OPENED);
-		assertThat(interval.midPoint(), is(0.0));
-		assertThat(interval.midPoint(), not(-1.0));
-		assertThat(interval.midPoint(), not(1.0));
+		assertThat(interval.calculateMiddle(), is(0.0));
+		assertThat(interval.calculateMiddle(), not(-1.0));
+		assertThat(interval.calculateMiddle(), not(1.0));
 	}
 
 	@Test
 	public void calcular_punto_medio_intervalo_negativo_ambos_limites_abiertos() {
 		Interval interval = IntervalFactory.getInterval(-15, -5, Opening.BOTH_OPENED);
-		assertThat(interval.midPoint(), is(-10.0));
-		assertThat(interval.midPoint(), not(-9.0));
-		assertThat(interval.midPoint(), not(-11.0));
+		assertThat(interval.calculateMiddle(), is(-10.0));
+		assertThat(interval.calculateMiddle(), not(-9.0));
+		assertThat(interval.calculateMiddle(), not(-11.0));
 	}
 
 	@Test
 	public void calcular_punto_medio_intervalo_positivo_limite_inferior_abierto() {
 		Interval interval = IntervalFactory.getInterval(0, 10, Opening.LEFT_OPENED);
-		assertThat(interval.midPoint(), is(5.0));
-		assertThat(interval.midPoint(), not(4.0));
-		assertThat(interval.midPoint(), not(6.0));
+		assertThat(interval.calculateMiddle(), is(5.0));
+		assertThat(interval.calculateMiddle(), not(4.0));
+		assertThat(interval.calculateMiddle(), not(6.0));
 	}
 
 	@Test
 	public void calcular_punto_medio_intervalo_mixto_limite_inferior_abierto() {
 		Interval interval = IntervalFactory.getInterval(-10, 10, Opening.LEFT_OPENED);
-		assertThat(interval.midPoint(), is(0.0));
-		assertThat(interval.midPoint(), not(-1.0));
-		assertThat(interval.midPoint(), not(1.0));
+		assertThat(interval.calculateMiddle(), is(0.0));
+		assertThat(interval.calculateMiddle(), not(-1.0));
+		assertThat(interval.calculateMiddle(), not(1.0));
 	}
 
 	@Test
 	public void calcular_punto_medio_intervalo_negativo_limite_inferior_abierto() {
 		Interval interval = IntervalFactory.getInterval(-15, -5, Opening.LEFT_OPENED);
-		assertThat(interval.midPoint(), is(-10.0));
-		assertThat(interval.midPoint(), not(-9.0));
-		assertThat(interval.midPoint(), not(-11.0));
+		assertThat(interval.calculateMiddle(), is(-10.0));
+		assertThat(interval.calculateMiddle(), not(-9.0));
+		assertThat(interval.calculateMiddle(), not(-11.0));
 	}
 
 	@Test
 	public void calcular_punto_medio_intervalo_positivo_limite_superior_abierto() {
 		Interval interval = IntervalFactory.getInterval(0, 10, Opening.RIGHT_OPENED);
-		assertThat(interval.midPoint(), is(5.0));
-		assertThat(interval.midPoint(), not(4.0));
-		assertThat(interval.midPoint(), not(6.0));
+		assertThat(interval.calculateMiddle(), is(5.0));
+		assertThat(interval.calculateMiddle(), not(4.0));
+		assertThat(interval.calculateMiddle(), not(6.0));
 	}
 
 	@Test
 	public void calcular_punto_medio_intervalo_mixto_limite_superior_abierto() {
 		Interval interval = IntervalFactory.getInterval(-10, 10, Opening.RIGHT_OPENED);
-		assertThat(interval.midPoint(), is(0.0));
-		assertThat(interval.midPoint(), not(-1.0));
-		assertThat(interval.midPoint(), not(1.0));
+		assertThat(interval.calculateMiddle(), is(0.0));
+		assertThat(interval.calculateMiddle(), not(-1.0));
+		assertThat(interval.calculateMiddle(), not(1.0));
 	}
 
 	@Test
 	public void calcular_punto_medio_intervalo_negativo_limite_superior_abierto() {
 		Interval interval = IntervalFactory.getInterval(-15, -5, Opening.RIGHT_OPENED);
-		assertThat(interval.midPoint(), is(-10.0));
-		assertThat(interval.midPoint(), not(-9.0));
-		assertThat(interval.midPoint(), not(-11.0));
+		assertThat(interval.calculateMiddle(), is(-10.0));
+		assertThat(interval.calculateMiddle(), not(-9.0));
+		assertThat(interval.calculateMiddle(), not(-11.0));
 	}
 
 	@Test
