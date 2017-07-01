@@ -49,22 +49,52 @@ public class Interval {
 	 * @param value numero a verificar si esta en el itervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
-	public boolean includes(double value) {
+	public boolean isNumberIncluded(double value) {
 		logger.debug("Entro en el metodo");
 
-		switch (opening) {
-			case BOTH_OPENED:
-				return minimum < value && value < maximum;
-			case LEFT_OPENED:
-				return minimum < value && value <= maximum;
-			case RIGHT_OPENED:
-				return minimum <= value && value < maximum;
-			case UNOPENED:
-				return minimum <= value && value <= maximum;
-			default:
-				assert false;
-				return false;
+		return isUnderMaximunLimit(value) && isOverMinimunLimit(value);
+	}
+
+	/**
+	 * Verifica si un numero esta por debajo del limite superior
+	 * @param value
+	 * @return true si esta por debajo, false en caso contrario
+	 */
+	private boolean isUnderMaximunLimit(double value){
+		if (isOpenMaxLimit()){
+			return value < this.maximum;
+		}else{
+			return value <= this.maximum;
 		}
+	}
+
+	/**
+	 * Indica si el limite superior es abierto
+	 * @return true si limite superior abierto, false en caso contrario
+	 */
+	private boolean isOpenMaxLimit() {
+		return this.opening == Opening.BOTH_OPENED || this.opening == Opening.RIGHT_OPENED;
+	}
+
+	/**
+	 * Verifica si un numero esta por encima del limite inferior
+	 * @param value
+	 * @return true si esta por encima, falso en caso contrario
+	 */
+	private boolean isOverMinimunLimit(double value) {
+		if (isOpenMinLimit()) {
+			return this.minimum < value;
+		} else {
+			return this.minimum <= value;
+		}
+	}
+
+	/**
+	 * Indica si el liminte inferior es abierto
+	 * @return true si limite inferior es abierto, false en caso contrario
+	 */
+	private boolean isOpenMinLimit() {
+		return this.opening == Opening.BOTH_OPENED || this.opening == Opening.LEFT_OPENED;
 	}
 
 	/**
@@ -73,9 +103,9 @@ public class Interval {
 	 * @param interval intervalo a verificar si esta dentro del intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
-	public boolean includes(Interval interval) {
-		boolean minimumIncluded = this.includes(interval.minimum);
-		boolean maximumIncluded = this.includes(interval.maximum);
+	public boolean isNumberIncluded(Interval interval) {
+		boolean minimumIncluded = this.isNumberIncluded(interval.minimum);
+		boolean maximumIncluded = this.isNumberIncluded(interval.maximum);
 		switch (opening) {
 			case BOTH_OPENED:
 				switch (interval.opening) {
@@ -187,8 +217,8 @@ public class Interval {
 					return false;
 			}
 		}
-		return this.includes(interval.minimum)
-				|| this.includes(interval.maximum);
+		return this.isNumberIncluded(interval.minimum)
+				|| this.isNumberIncluded(interval.maximum);
 	}
 
 	@Override
