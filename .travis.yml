@@ -22,5 +22,5 @@ notifications:
   slack:
     rooms:
       - mma-20162017:USiQRxtAva8gFN3xVFNNxC10
-    on_success: always
+    on_success: change
     on_failure: always
