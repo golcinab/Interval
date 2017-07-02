@@ -1,10 +1,10 @@
 package mma.legacy.interval;
 
 /**
- * Clase para el ejemplo de trabajo con Legacy
+ * Clase para el tratamiento de intervalos con limites inferior y superior cerrados
  *
- * @author Agustin
- *         Controla operaciones sobre intervalos que pudeen ser abiertos o cerrados
+ * @author Gabriel Olcina
+ *
  */
 public class IntervalUnopened extends Interval {
 
