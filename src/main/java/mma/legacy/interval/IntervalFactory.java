@@ -24,10 +24,17 @@ public class IntervalFactory {
 	 * @return devuelve el intervalo creado.
 	 */
 	public static Interval createInterval(double minimum, double maximum, Opening opening) {
-		if (opening == Opening.BOTH_OPENED) return new IntervalOpened(minimum, maximum, opening);
-		if (opening == Opening.RIGHT_OPENED) return new IntervalRightOpened(minimum, maximum, opening);
-		if (opening == Opening.LEFT_OPENED) return new IntervalLeftOpened(minimum, maximum);
-		if (opening == Opening.UNOPENED) return new IntervalUnopened(minimum, maximum, opening);
-		else return null;
+		switch (opening) {
+			case BOTH_OPENED:
+				return new IntervalOpened(minimum, maximum);
+			case RIGHT_OPENED:
+				return new IntervalRightOpened(minimum, maximum);
+			case LEFT_OPENED:
+				return new IntervalLeftOpened(minimum, maximum);
+			case UNOPENED:
+				return new IntervalUnopened(minimum, maximum);
+			default:
+				throw new IllegalArgumentException("Tipo de intervalo no definido");
+		}
 	}
 }

@@ -11,7 +11,7 @@ public abstract class Interval {
 	protected double minimum;  // numero entero que indica el limite superior del intervalo
 	protected double maximum;  // numero entero que indica el limite superior del intervalo
 
-	protected Interval(double minimum, double maximum, Opening opening) {
+	protected Interval(double minimum, double maximum) {
 		this.minimum = minimum;
 		this.maximum = maximum;
 	}
@@ -19,8 +19,11 @@ public abstract class Interval {
 	protected abstract Opening getOpening();
 
 	protected abstract boolean isOpenMaxLimit();
-
 	protected abstract boolean isOpenMinLimit();
+
+	protected abstract boolean isUnderMaximunLimit(double value);
+	protected abstract boolean isOverMinimunLimit(double value);
+
 
 	/**
 	 * Devuelve el punto medio del intervalo
@@ -50,32 +53,6 @@ public abstract class Interval {
 		logger.debug("Entro en el metodo");
 
 		return isUnderMaximunLimit(value) && isOverMinimunLimit(value);
-	}
-
-	/**
-	 * Verifica si un numero esta por debajo del limite superior
-	 * @param value valor a verificar
-	 * @return true si esta por debajo, false en caso contrario
-	 */
-	private boolean isUnderMaximunLimit(double value){
-		if (isOpenMaxLimit()){
-			return value < this.maximum;
-		}else{
-			return value <= this.maximum;
-		}
-	}
-
-	/**
-	 * Verifica si un numero esta por encima del limite inferior
-	 * @param value valora a verificar
-	 * @return true si esta por encima, falso en caso contrario
-	 */
-	private boolean isOverMinimunLimit(double value) {
-		if (isOpenMinLimit()) {
-			return this.minimum < value;
-		} else {
-			return this.minimum <= value;
-		}
 	}
 
 	/**
