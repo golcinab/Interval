@@ -24,7 +24,6 @@ public abstract class Interval {
 	protected abstract boolean isUnderMaximunLimit(double value);
 	protected abstract boolean isOverMinimunLimit(double value);
 
-
 	/**
 	 * Devuelve el punto medio del intervalo
 	 *
