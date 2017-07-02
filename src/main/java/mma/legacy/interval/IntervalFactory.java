@@ -24,6 +24,10 @@ public class IntervalFactory {
 	 * @return devuelve el intervalo creado.
 	 */
 	public static Interval createInterval(double minimum, double maximum, Opening opening) {
-		return new Interval(minimum, maximum, opening);
+		if (opening == Opening.BOTH_OPENED) return new IntervalOpened(minimum, maximum, opening);
+		if (opening == Opening.RIGHT_OPENED) return new IntervalRightOpened(minimum, maximum, opening);
+		if (opening == Opening.LEFT_OPENED) return new IntervalLeftOpened(minimum, maximum);
+		if (opening == Opening.UNOPENED) return new IntervalUnopened(minimum, maximum, opening);
+		else return null;
 	}
 }

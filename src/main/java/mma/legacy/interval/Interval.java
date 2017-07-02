@@ -3,35 +3,24 @@ package mma.legacy.interval;
 import org.apache.log4j.Logger;
 
 /**
- * Clase para el ejemplo de trabajo con Legacy
- *
- * @author Agustin
- *         Controla operaciones sobre intervalos que pudeen ser abiertos o cerrados
+ * Created by golcinab on 02/07/2017.
  */
-public class Interval {
+public abstract class Interval {
 	// Creamos el logger del proyecto
-	private static final Logger logger = Logger.getLogger(Interval.class);
+	protected static final Logger logger = Logger.getLogger(Interval.class);
+	protected double minimum;  // numero entero que indica el limite superior del intervalo
+	protected double maximum;  // numero entero que indica el limite superior del intervalo
 
-	private double minimum;  // numero entero que indica el limite superior del intervalo
-	private double maximum;  // numero entero que indica el limite superior del intervalo
-
-	private Opening opening; // enum que indica el tipo de intervalo de los 4 posibles.
-
-	/**
-	 * Construye un objeto intervalo dado su maximo / minimo y el tipo de intervalo.
-	 * Todos los parametros pueden ser nulos, se especifica el minimo, maximo y el tipo de intervalo.
-	 *
-	 * @param minimum valor minimo del intervalo
-	 * @param maximum valor maximo del intervalo
-	 * @param opening tipo de intervalo
-	 */
-	public Interval(double minimum, double maximum, Opening opening) {
+	protected Interval(double minimum, double maximum, Opening opening) {
 		this.minimum = minimum;
 		this.maximum = maximum;
-		this.opening = opening;
-
-		logger.debug("Objeto creado");
 	}
+
+	protected abstract Opening getOpening();
+
+	protected abstract boolean isOpenMaxLimit();
+
+	protected abstract boolean isOpenMinLimit();
 
 	/**
 	 * Devuelve el punto medio del intervalo
@@ -40,6 +29,15 @@ public class Interval {
 	 */
 	public double calculateMiddle() {
 		return (maximum + minimum) / 2;
+	}
+
+	/**
+	 * Comparamos si dos double son iguales
+	 *
+	 * @return true si son iguales, false en caso contrario
+	 */
+	private boolean doubleEquals(double value1, double value2) {
+		return Double.compare(value1, value2) == 0;
 	}
 
 	/**
@@ -68,14 +66,6 @@ public class Interval {
 	}
 
 	/**
-	 * Indica si el limite superior es abierto
-	 * @return true si limite superior abierto, false en caso contrario
-	 */
-	private boolean isOpenMaxLimit() {
-		return this.opening == Opening.BOTH_OPENED || this.opening == Opening.RIGHT_OPENED;
-	}
-
-	/**
 	 * Verifica si un numero esta por encima del limite inferior
 	 * @param value valora a verificar
 	 * @return true si esta por encima, falso en caso contrario
@@ -89,21 +79,6 @@ public class Interval {
 	}
 
 	/**
-	 * Indica si el liminte inferior es abierto
-	 * @return true si limite inferior es abierto, false en caso contrario
-	 */
-	private boolean isOpenMinLimit() {
-		return this.opening == Opening.BOTH_OPENED || this.opening == Opening.LEFT_OPENED;
-	}
-
-	/**
-	 * Comparamos si dos double son iguales
-	 * @return true si son iguales, false en caso contrario
-	 */
-	private boolean doubleEquals(double value1, double value2){
-		return Double.compare(value1, value2) == 0;
-	}
-	/**
 	 * Indica si un intervalo esta dentro de otro intervalo
 	 *
 	 * @param interval intervalo a verificar si esta dentro del intervalo
@@ -115,9 +90,9 @@ public class Interval {
 
 		boolean result = false;
 
-		switch (opening) {
+		switch (getOpening()) {
 			case BOTH_OPENED:
-				switch (interval.opening) {
+				switch (interval.getOpening()) {
 					case BOTH_OPENED:
 						result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
 						break;
@@ -169,29 +144,29 @@ public class Interval {
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
 	public boolean intersectsWith(Interval interval) {
-		if ( this.doubleEquals(minimum, interval.maximum))  {
-			switch (opening) {
+		if (this.doubleEquals(minimum, interval.maximum)) {
+			switch (getOpening()) {
 				case BOTH_OPENED:
 				case LEFT_OPENED:
 					return false;
 				case RIGHT_OPENED:
 				case UNOPENED:
-					return interval.opening == Opening.LEFT_OPENED ||
-							interval.opening == Opening.UNOPENED;
+					return interval.getOpening() == Opening.LEFT_OPENED ||
+							interval.getOpening() == Opening.UNOPENED;
 				default:
 					assert false;
 					return false;
 			}
 		}
 		if ( this.doubleEquals(maximum, interval.minimum)) {
-			switch (opening) {
+			switch (getOpening()) {
 				case BOTH_OPENED:
 				case RIGHT_OPENED:
 					return false;
 				case LEFT_OPENED:
 				case UNOPENED:
-					return interval.opening == Opening.RIGHT_OPENED ||
-							interval.opening == Opening.UNOPENED;
+					return interval.getOpening() == Opening.RIGHT_OPENED ||
+							interval.getOpening() == Opening.UNOPENED;
 				default:
 					assert false;
 					return false;

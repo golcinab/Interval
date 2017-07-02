@@ -4,8 +4,6 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
@@ -14,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class IntervalTest {
 
-	private static final Logger logger = Logger.getLogger(Interval.class);
+	private static final Logger logger = Logger.getLogger(IntervalOpened.class);
 
 	/**
 	 * Configuración inicial del logger.
