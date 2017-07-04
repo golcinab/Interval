@@ -66,17 +66,20 @@ public class IntervalOpened extends Interval {
 		boolean minimumIncluded = this.isNumberIncluded(interval.getMinimum());
 		boolean maximumIncluded = this.isNumberIncluded(interval.getMaximum());
 
+		boolean bothMinEquals = this.doubleEquals(getMinimum(), interval.getMinimum());
+		boolean bothMaxEquals = this.doubleEquals(getMaximum(), interval.getMaximum());
+
 		boolean result = false;
 
 		switch (interval.getOpening()) {
 			case BOTH_OPENED:
-				result = (minimumIncluded || this.doubleEquals(getMinimum(), interval.getMinimum())) && (maximumIncluded || this.doubleEquals(getMaximum(), interval.getMaximum()));
+				result = (minimumIncluded || bothMinEquals) && (maximumIncluded || bothMaxEquals);
 				break;
 			case LEFT_OPENED:
-				result =  (minimumIncluded || this.doubleEquals(getMinimum(), interval.getMinimum()))  && (maximumIncluded);
+				result =  (minimumIncluded || bothMinEquals)  && (maximumIncluded);
 				break;
 			case RIGHT_OPENED:
-				result = (minimumIncluded) && (maximumIncluded || this.doubleEquals(getMaximum(), interval.getMaximum()));
+				result = (minimumIncluded) && (maximumIncluded || bothMaxEquals);
 				break;
 			case UNOPENED:
 				result =  (minimumIncluded) && (maximumIncluded);
