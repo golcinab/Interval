@@ -7,9 +7,13 @@ import org.apache.log4j.Logger;
  */
 public abstract class Interval {
 	// Creamos el logger del proyecto
-	protected static final Logger logger = Logger.getLogger(Interval.class);
-	protected double minimum;  // numero entero que indica el limite superior del intervalo
-	protected double maximum;  // numero entero que indica el limite superior del intervalo
+	private static final Logger logger = Logger.getLogger(Interval.class);
+
+	protected double getMinimum() { return minimum; }
+	protected double getMaximum() { return maximum; }
+
+	private double minimum;  // numero entero que indica el limite superior del intervalo
+	private double maximum;  // numero entero que indica el limite superior del intervalo
 
 	protected Interval(double minimum, double maximum) {
 		this.minimum = minimum;
@@ -25,6 +29,14 @@ public abstract class Interval {
 	protected abstract boolean isOverMinimunLimit(double value);
 
 	/**
+	 * Indica si un intervalo esta dentro de otro intervalo
+	 *
+	 * @param interval intervalo a verificar si esta dentro del intervalo
+	 * @return true si esta en el intervalo, false en caso contrario
+	 */
+	public abstract boolean isIntervalIncluded(Interval interval);
+
+	/**
 	 * Devuelve el punto medio del intervalo
 	 *
 	 * @return el punto medio del intervalo
@@ -38,7 +50,7 @@ public abstract class Interval {
 	 *
 	 * @return true si son iguales, false en caso contrario
 	 */
-	private boolean doubleEquals(double value1, double value2) {
+	boolean doubleEquals(double value1, double value2) {
 		return Double.compare(value1, value2) == 0;
 	}
 
@@ -50,66 +62,7 @@ public abstract class Interval {
 	 */
 	public boolean isNumberIncluded(double value) {
 		logger.debug("Entro en el metodo");
-
 		return isUnderMaximunLimit(value) && isOverMinimunLimit(value);
-	}
-
-	/**
-	 * Indica si un intervalo esta dentro de otro intervalo
-	 *
-	 * @param interval intervalo a verificar si esta dentro del intervalo
-	 * @return true si esta en el intervalo, false en caso contrario
-	 */
-	public boolean isIntervalIncluded(Interval interval) {
-		boolean minimumIncluded = this.isNumberIncluded(interval.minimum);
-		boolean maximumIncluded = this.isNumberIncluded(interval.maximum);
-
-		boolean result = false;
-
-		switch (getOpening()) {
-			case BOTH_OPENED:
-				switch (interval.getOpening()) {
-					case BOTH_OPENED:
-						result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
-						break;
-					case LEFT_OPENED:
-						result =  (minimumIncluded || this.doubleEquals(minimum, interval.minimum))  && (maximumIncluded);
-						break;
-					case RIGHT_OPENED:
-						result = (minimumIncluded) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
-						break;
-					case UNOPENED:
-						result =  (minimumIncluded) && (maximumIncluded);
-						break;
-					default:
-						break;
-				}
-				break;
-
-			case LEFT_OPENED:
-				if( interval.isOpenMinLimit()){
-					result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
-				} else{
-					result = (minimumIncluded) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
-				}
-				break;
-
-			case RIGHT_OPENED:
-				if (interval.isOpenMaxLimit()) {
-					result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
-				}else{
-					result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded);
-				}
-				break;
-
-			case UNOPENED:
-				result = (minimumIncluded || this.doubleEquals(minimum, interval.minimum)) && (maximumIncluded || this.doubleEquals(maximum, interval.maximum));
-				break;
-
-			default:
-				break;
-		}
-		return result;
 	}
 
 	/**

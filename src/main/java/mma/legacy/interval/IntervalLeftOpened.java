@@ -1,5 +1,7 @@
 package mma.legacy.interval;
 
+import org.apache.log4j.Logger;
+
 /**
  * Clase para el tratamiento de intervalos con limite inferior abierto, y superior cerrado
  *
@@ -8,6 +10,7 @@ package mma.legacy.interval;
  */
 public class IntervalLeftOpened extends Interval {
 
+	private static final Logger logger = Logger.getLogger(IntervalLeftOpened.class);
 	/**
 	 * Construye un objeto intervalo dado su maximo / minimo y el tipo de intervalo.
 	 * Todos los parametros pueden ser nulos, se especifica el minimo, maximo y el tipo de intervalo.
@@ -46,12 +49,34 @@ public class IntervalLeftOpened extends Interval {
 	 * @param value valor a verificar
 	 * @return true si esta por debajo, false en caso contrario
 	 */
-	protected boolean isUnderMaximunLimit(double value){ return value <= this.maximum; }
+	protected boolean isUnderMaximunLimit(double value){ return value <= this.getMaximum(); }
 
 	/**
 	 * Verifica si un numero esta por encima del limite inferior
 	 * @param value valora a verificar
 	 * @return true si esta por encima, falso en caso contrario
 	 */
-	protected boolean isOverMinimunLimit(double value) { return this.minimum < value; }
+	protected boolean isOverMinimunLimit(double value) { return this.getMinimum() < value; }
+
+	/**
+	 * Indica si un intervalo esta dentro de otro intervalo
+	 *
+	 * @param interval intervalo a verificar si esta dentro del intervalo
+	 * @return true si esta en el intervalo, false en caso contrario
+	 */
+	public boolean isIntervalIncluded(Interval interval) {
+		boolean minimumIncluded = this.isNumberIncluded(interval.getMinimum());
+		boolean maximumIncluded = this.isNumberIncluded(interval.getMaximum());
+
+		boolean result = false;
+
+		if( interval.isOpenMinLimit()){
+			result = (minimumIncluded || this.doubleEquals(getMinimum(), interval.getMinimum())) && (maximumIncluded || this.doubleEquals(getMaximum(), interval.getMaximum()));
+		} else{
+			result = (minimumIncluded) && (maximumIncluded || this.doubleEquals(getMaximum(), interval.getMaximum()));
+		}
+
+		return result;
+	}
+
 }

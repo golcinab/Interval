@@ -1,5 +1,7 @@
 package mma.legacy.interval;
 
+import org.apache.log4j.Logger;
+
 /**
  * Clase para el tratamiento de intervalos con limites inferior y superior cerrados
  *
@@ -7,6 +9,8 @@ package mma.legacy.interval;
  *
  */
 public class IntervalUnopened extends Interval {
+
+	private static final Logger logger = Logger.getLogger(IntervalUnopened.class);
 
 	/**
 	 * Construye un objeto intervalo dado su maximo / minimo y el tipo de intervalo.
@@ -46,7 +50,7 @@ public class IntervalUnopened extends Interval {
 	 * @return true si esta por debajo, false en caso contrario
 	 */
 	@Override
-	protected boolean isUnderMaximunLimit(double value){ return value <= this.maximum; }
+	protected boolean isUnderMaximunLimit(double value){ return value <= this.getMaximum(); }
 
 	/**
 	 * Verifica si un numero esta por encima del limite inferior
@@ -54,6 +58,18 @@ public class IntervalUnopened extends Interval {
 	 * @return true si esta por encima, falso en caso contrario
 	 */
 	@Override
-	protected boolean isOverMinimunLimit(double value) { return this.minimum <= value; }
+	protected boolean isOverMinimunLimit(double value) { return this.getMinimum() <= value; }
 
+	/**
+	 * Indica si un intervalo esta dentro de otro intervalo
+	 *
+	 * @param interval intervalo a verificar si esta dentro del intervalo
+	 * @return true si esta en el intervalo, false en caso contrario
+	 */
+	public boolean isIntervalIncluded(Interval interval) {
+		boolean minimumIncluded = this.isNumberIncluded(interval.getMinimum());
+		boolean maximumIncluded = this.isNumberIncluded(interval.getMaximum());
+
+		return (minimumIncluded || this.doubleEquals(getMinimum(), interval.getMinimum())) && (maximumIncluded || this.doubleEquals(getMaximum(), interval.getMaximum()));
+	}
 }
