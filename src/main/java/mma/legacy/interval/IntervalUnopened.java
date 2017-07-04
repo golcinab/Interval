@@ -24,6 +24,7 @@ public class IntervalUnopened extends Interval {
 		logger.debug("Objeto creado: IntervalUnopened");
 	}
 
+	@Override
 	protected Opening getOpening() { return  Opening.UNOPENED;	}
 
 	/**
@@ -75,6 +76,14 @@ public class IntervalUnopened extends Interval {
 		boolean bothMaxEquals = this.doubleEquals(getMaximum(), interval.getMaximum());
 
 		return (minimumIncluded || bothMinEquals) && (maximumIncluded || bothMaxEquals);
+	}
+
+	@Override
+	protected boolean isIntervalIncludedOnBothOpenedInterval(Interval interval) {
+		boolean minimumIncluded = interval.isNumberIncluded(getMinimum());
+		boolean maximumIncluded = interval.isNumberIncluded(getMaximum());
+
+		return minimumIncluded && maximumIncluded;
 	}
 
 	/**

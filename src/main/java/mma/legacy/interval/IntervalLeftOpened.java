@@ -74,15 +74,24 @@ public class IntervalLeftOpened extends Interval {
 		boolean bothMinEquals = this.doubleEquals(getMinimum(), interval.getMinimum());
 		boolean bothMaxEquals = this.doubleEquals(getMaximum(), interval.getMaximum());
 
-		boolean result = false;
+		boolean result;
 
 		if( interval.isOpenMinLimit()){
 			result = (minimumIncluded || bothMinEquals) && (maximumIncluded || bothMaxEquals);
 		} else{
 			result = (minimumIncluded) && (maximumIncluded || bothMaxEquals);
 		}
-
 		return result;
+	}
+
+	@Override
+	protected boolean isIntervalIncludedOnBothOpenedInterval(Interval interval) {
+		boolean minimumIncluded = interval.isNumberIncluded(getMinimum());
+		boolean maximumIncluded = interval.isNumberIncluded(getMaximum());
+
+		boolean bothMinEquals = this.doubleEquals(getMinimum(), interval.getMinimum());
+
+		return (minimumIncluded || bothMinEquals)  && (maximumIncluded);
 	}
 
 	/**

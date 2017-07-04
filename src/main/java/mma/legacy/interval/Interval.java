@@ -33,6 +33,13 @@ public abstract class Interval {
 	protected abstract boolean isOverMinimunLimit(double value);
 
 	/**
+	 * Obtenemmos is el interval actual está incluido en el interval abierto
+	 * @param interval intervalo abierto donde hay que estar incluido
+	 * @return si esta incluido
+	 */
+	protected abstract boolean isIntervalIncludedOnBothOpenedInterval(Interval interval);
+
+	/**
 	 * Indica si un intervalo esta dentro de otro intervalo
 	 *
 	 * @param interval intervalo a verificar si esta dentro del intervalo

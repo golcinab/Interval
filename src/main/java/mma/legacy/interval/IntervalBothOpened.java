@@ -24,6 +24,7 @@ public class IntervalBothOpened extends Interval {
 		logger.debug("Objeto creado: IntervalBothOpened");
 	}
 
+	@Override
 	protected Opening getOpening() { return Opening.BOTH_OPENED; }
 
 	/**
@@ -66,31 +67,18 @@ public class IntervalBothOpened extends Interval {
 	 */
 	@Override
 	public boolean isIntervalIncluded(Interval interval) {
-		boolean minimumIncluded = this.isNumberIncluded(interval.getMinimum());
-		boolean maximumIncluded = this.isNumberIncluded(interval.getMaximum());
+		return interval.isIntervalIncludedOnBothOpenedInterval(this);
+	}
+
+	@Override
+	protected boolean isIntervalIncludedOnBothOpenedInterval(Interval interval){
+		boolean minimumIncluded = interval.isNumberIncluded(getMinimum());
+		boolean maximumIncluded = interval.isNumberIncluded(getMaximum());
 
 		boolean bothMinEquals = this.doubleEquals(getMinimum(), interval.getMinimum());
 		boolean bothMaxEquals = this.doubleEquals(getMaximum(), interval.getMaximum());
 
-		boolean result = false;
-
-		switch (interval.getOpening()) {
-			case BOTH_OPENED:
-				result = (minimumIncluded || bothMinEquals) && (maximumIncluded || bothMaxEquals);
-				break;
-			case LEFT_OPENED:
-				result =  (minimumIncluded || bothMinEquals)  && (maximumIncluded);
-				break;
-			case RIGHT_OPENED:
-				result = (minimumIncluded) && (maximumIncluded || bothMaxEquals);
-				break;
-			case UNOPENED:
-				result =  (minimumIncluded) && (maximumIncluded);
-				break;
-			default:
-				break;
-		}
-		return result;
+		return (minimumIncluded || bothMinEquals) && (maximumIncluded || bothMaxEquals);
 	}
 
 	/**

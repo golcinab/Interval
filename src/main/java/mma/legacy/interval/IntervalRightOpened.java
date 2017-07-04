@@ -24,6 +24,7 @@ public class IntervalRightOpened extends Interval {
 		logger.debug("Objeto creado: IntervalRightOpened");
 	}
 
+	@Override
 	protected Opening getOpening() { return Opening.RIGHT_OPENED; }
 
 	/**
@@ -73,14 +74,24 @@ public class IntervalRightOpened extends Interval {
 		boolean bothMinEquals = this.doubleEquals(getMinimum(), interval.getMinimum());
 		boolean bothMaxEquals = this.doubleEquals(getMaximum(), interval.getMaximum());
 
-		boolean result = false;
+		boolean result;
 
 		if (interval.isOpenMaxLimit()) {
-			result = (minimumIncluded || bothMinEquals && (maximumIncluded || bothMaxEquals));
+			result = minimumIncluded || bothMinEquals && (maximumIncluded || bothMaxEquals);
 		}else{
 			result = (minimumIncluded || bothMinEquals) && (maximumIncluded);
 		}
 		return result;
+	}
+
+	@Override
+	protected boolean isIntervalIncludedOnBothOpenedInterval(Interval interval) {
+		boolean minimumIncluded = interval.isNumberIncluded(getMinimum());
+		boolean maximumIncluded = interval.isNumberIncluded(getMaximum());
+
+		boolean bothMaxEquals = this.doubleEquals(getMaximum(), interval.getMaximum());
+
+		return (minimumIncluded) && (maximumIncluded || bothMaxEquals);
 	}
 
 	/**
