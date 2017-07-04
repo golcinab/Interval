@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
  * @author Gabriel Olcina
  *
  */
-public class IntervalOpened extends Interval {
+public class IntervalBothOpened extends Interval {
 
-	private static final Logger logger = Logger.getLogger(IntervalOpened.class);
+	private static final Logger logger = Logger.getLogger(IntervalBothOpened.class);
 
 	/**
 	 * Construye un objeto intervalo dado su maximo / minimo y el tipo de intervalo.
@@ -18,10 +18,10 @@ public class IntervalOpened extends Interval {
 	 *  @param minimum valor minimo del intervalo
 	 * @param maximum valor maximo del intervalo
 	 */
-	public IntervalOpened(double minimum, double maximum) {
+	public IntervalBothOpened(double minimum, double maximum) {
 		super(minimum, maximum);
 
-		logger.debug("Objeto creado");
+		logger.debug("Objeto creado: IntervalBothOpened");
 	}
 
 	protected Opening getOpening() { return Opening.BOTH_OPENED; }
@@ -47,6 +47,7 @@ public class IntervalOpened extends Interval {
 	 * @param value valor a verificar
 	 * @return true si esta por debajo, false en caso contrario
 	 */
+	@Override
 	protected boolean isUnderMaximunLimit(double value){ return value < this.getMaximum(); }
 
 	/**
@@ -54,6 +55,7 @@ public class IntervalOpened extends Interval {
 	 * @param value valora a verificar
 	 * @return true si esta por encima, falso en caso contrario
 	 */
+	@Override
 	protected boolean isOverMinimunLimit(double value) { return this.getMinimum() < value; }
 
 	/**
@@ -62,6 +64,7 @@ public class IntervalOpened extends Interval {
 	 * @param interval intervalo a verificar si esta dentro del intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
+	@Override
 	public boolean isIntervalIncluded(Interval interval) {
 		boolean minimumIncluded = this.isNumberIncluded(interval.getMinimum());
 		boolean maximumIncluded = this.isNumberIncluded(interval.getMaximum());
@@ -97,6 +100,7 @@ public class IntervalOpened extends Interval {
 	 * @param interval intervalo a verificar si intersecta con el intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
+	@Override
 	public boolean intersectsWith(Interval interval) {
 		// Este caso se puede simplificar con solo el ultimo return dentro del metodo.
 		if (this.doubleEquals(getMinimum(), interval.getMaximum())) { return false; }

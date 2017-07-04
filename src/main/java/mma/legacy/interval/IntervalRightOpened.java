@@ -21,7 +21,7 @@ public class IntervalRightOpened extends Interval {
 	public IntervalRightOpened(double minimum, double maximum) {
 		super(minimum, maximum);
 
-		logger.debug("Objeto creado");
+		logger.debug("Objeto creado: IntervalRightOpened");
 	}
 
 	protected Opening getOpening() { return Opening.RIGHT_OPENED; }
@@ -65,6 +65,7 @@ public class IntervalRightOpened extends Interval {
 	 * @param interval intervalo a verificar si esta dentro del intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
+	@Override
 	public boolean isIntervalIncluded(Interval interval) {
 		boolean minimumIncluded = this.isNumberIncluded(interval.getMinimum());
 		boolean maximumIncluded = this.isNumberIncluded(interval.getMaximum());
@@ -89,6 +90,7 @@ public class IntervalRightOpened extends Interval {
 	 * @param interval intervalo a verificar si intersecta con el intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
+	@Override
 	public boolean intersectsWith(Interval interval) {
 		if (this.doubleEquals(getMinimum(), interval.getMaximum())) {
 			return interval.getOpening() == Opening.LEFT_OPENED ||

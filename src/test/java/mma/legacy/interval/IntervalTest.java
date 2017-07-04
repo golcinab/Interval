@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class IntervalTest {
 
-	private static final Logger logger = Logger.getLogger(IntervalOpened.class);
+	private static final Logger logger = Logger.getLogger(IntervalBothOpened.class);
 
 	/**
 	 * Configuración inicial del logger.

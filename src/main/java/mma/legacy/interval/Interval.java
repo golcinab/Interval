@@ -20,6 +20,10 @@ public abstract class Interval {
 		this.maximum = maximum;
 	}
 
+	/**
+	 * Obtenemos el tipo de intervalo del objeto
+	 * @return tipo de "Opening"
+	 */
 	protected abstract Opening getOpening();
 
 	protected abstract boolean isOpenMaxLimit();
@@ -59,7 +63,7 @@ public abstract class Interval {
 	 *
 	 * @return true si son iguales, false en caso contrario
 	 */
-	boolean doubleEquals(double value1, double value2) {
+	protected boolean doubleEquals(double value1, double value2) {
 		return Double.compare(value1, value2) == 0;
 	}
 
@@ -70,7 +74,7 @@ public abstract class Interval {
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
 	public boolean isNumberIncluded(double value) {
-		logger.debug("Entro en el metodo");
+		logger.debug("Entro en el metodo isNumberIncluded");
 		return isUnderMaximunLimit(value) && isOverMinimunLimit(value);
 	}
 

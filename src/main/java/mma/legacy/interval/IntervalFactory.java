@@ -26,7 +26,7 @@ public class IntervalFactory {
 	public static Interval createInterval(double minimum, double maximum, Opening opening) {
 		switch (opening) {
 			case BOTH_OPENED:
-				return new IntervalOpened(minimum, maximum);
+				return new IntervalBothOpened(minimum, maximum);
 			case RIGHT_OPENED:
 				return new IntervalRightOpened(minimum, maximum);
 			case LEFT_OPENED:
