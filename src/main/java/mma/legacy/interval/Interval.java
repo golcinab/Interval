@@ -3,22 +3,38 @@ package mma.legacy.interval;
 import org.apache.log4j.Logger;
 
 /**
+ * Clase de Interval padre para los diferentes tipos de intervalos
  * Created by golcinab on 02/07/2017.
  */
 public abstract class Interval {
 	// Creamos el logger del proyecto
 	private static final Logger logger = Logger.getLogger(Interval.class);
 
-	protected double getMinimum() { return minimum; }
-	protected double getMaximum() { return maximum; }
-
-	private double minimum;  // numero entero que indica el limite superior del intervalo
+	/** Variables de clase para minimo y maximo **/
+	private double minimum;  // numero entero que indica el limite inferior del intervalo
 	private double maximum;  // numero entero que indica el limite superior del intervalo
 
+	/**
+	 * Constructura común del intervalo que utiliza lo limietes maximo y minimo
+	 * @param minimum limite inferior
+	 * @param maximum limite superior
+	 */
 	protected Interval(double minimum, double maximum) {
 		this.minimum = minimum;
 		this.maximum = maximum;
 	}
+
+	/**
+	 * Getter del limite minimo
+	 * @return limite inferior
+	 */
+	protected double getMinimum() { return minimum; }
+
+	/**
+	 * Getter del limite maximo
+	 * @return limite superior
+	 */
+	protected double getMaximum() { return maximum; }
 
 	/**
 	 * Obtenemos el tipo de intervalo del objeto
@@ -26,10 +42,30 @@ public abstract class Interval {
 	 */
 	protected abstract Opening getOpening();
 
+	/**
+	 * Indica si el limite superior es abierto
+	 * @return true si el limite superior es abierto
+	 */
 	protected abstract boolean isOpenMaxLimit();
+
+	/**
+	 * Indica si el limite inferior es abierto
+	 * @return true si limite inferior abierto
+	 */
 	protected abstract boolean isOpenMinLimit();
 
+	/**
+	 * Indica si el valor esta por debajo de limite maximo
+	 * @param value valor a verificar
+	 * @return true si esta por encima del limite
+	 */
 	protected abstract boolean isUnderMaximunLimit(double value);
+
+	/**
+	 * Indica si el valor esta por encima del limite minimo
+	 * @param value valor a verificar
+	 * @return true si esta por encima del limite
+	 */
 	protected abstract boolean isOverMinimunLimit(double value);
 
 	/**
@@ -58,7 +94,6 @@ public abstract class Interval {
 
 	/**
 	 * Devuelve el punto medio del intervalo
-	 *
 	 * @return el punto medio del intervalo
 	 */
 	public double calculateMiddle() {
@@ -67,7 +102,6 @@ public abstract class Interval {
 
 	/**
 	 * Comparamos si dos double son iguales
-	 *
 	 * @return true si son iguales, false en caso contrario
 	 */
 	protected boolean doubleEquals(double value1, double value2) {
@@ -76,7 +110,6 @@ public abstract class Interval {
 
 	/**
 	 * Indica si un numero dado se encuentra dentro del interval.
-	 *
 	 * @param value numero a verificar si esta en el itervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */

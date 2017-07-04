@@ -15,7 +15,7 @@ public class IntervalBothOpened extends Interval {
 	/**
 	 * Construye un objeto intervalo dado su maximo / minimo y el tipo de intervalo.
 	 * Todos los parametros pueden ser nulos, se especifica el minimo, maximo y el tipo de intervalo.
-	 *  @param minimum valor minimo del intervalo
+	 * @param minimum valor minimo del intervalo
 	 * @param maximum valor maximo del intervalo
 	 */
 	public IntervalBothOpened(double minimum, double maximum) {
@@ -24,12 +24,15 @@ public class IntervalBothOpened extends Interval {
 		logger.debug("Objeto creado: IntervalBothOpened");
 	}
 
+	/**
+	 * Obtenemos el tipo de intervalo del objeto
+	 * @return tipo de "Opening"
+	 */
 	@Override
 	protected Opening getOpening() { return Opening.BOTH_OPENED; }
 
 	/**
 	 * Indica si el limite superior es abierto
-	 *
 	 * @return true si limite superior abierto, false en caso contrario
 	 */
 	@Override
@@ -37,7 +40,6 @@ public class IntervalBothOpened extends Interval {
 
 	/**
 	 * Indica si el liminte inferior es abierto
-	 *
 	 * @return true si limite inferior es abierto, false en caso contrario
 	 */
 	@Override
@@ -61,7 +63,6 @@ public class IntervalBothOpened extends Interval {
 
 	/**
 	 * Indica si un intervalo esta dentro de otro intervalo
-	 *
 	 * @param interval intervalo a verificar si esta dentro del intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
@@ -84,15 +85,19 @@ public class IntervalBothOpened extends Interval {
 	/**
 	 * Indica si un intervalo se "intersecta" con otro intervalo
 	 * Se considera que intersecta si uno de los limites está dentro del intervalo, y el otro fuera
-	 *
 	 * @param interval intervalo a verificar si intersecta con el intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
 	@Override
 	public boolean intersectsWith(Interval interval) {
 		// Este caso se puede simplificar con solo el ultimo return dentro del metodo.
-		if (this.doubleEquals(getMinimum(), interval.getMaximum())) { return false; }
-		if ( this.doubleEquals(getMaximum(), interval.getMinimum())) { return false; }
+		if (this.doubleEquals(getMinimum(), interval.getMaximum())) {
+				return false;
+		}
+
+		if ( this.doubleEquals(getMaximum(), interval.getMinimum())) {
+			return false;
+		}
 
 		return this.isNumberIncluded(interval.getMinimum()) || this.isNumberIncluded(interval.getMaximum());
 	}

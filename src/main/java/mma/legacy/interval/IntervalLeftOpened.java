@@ -62,7 +62,6 @@ public class IntervalLeftOpened extends Interval {
 
 	/**
 	 * Indica si un intervalo esta dentro de otro intervalo
-	 *
 	 * @param interval intervalo a verificar si esta dentro del intervalo
 	 * @return true si esta en el intervalo, false en caso contrario
 	 */
@@ -103,7 +102,9 @@ public class IntervalLeftOpened extends Interval {
 	 */
 	@Override
 	public boolean intersectsWith(Interval interval) {
-		if (this.doubleEquals(getMinimum(), interval.getMaximum())) { return false; }
+		if (this.doubleEquals(getMinimum(), interval.getMaximum())) {
+			return false;
+		}
 
 		if ( this.doubleEquals(getMaximum(), interval.getMinimum())) {
 			return interval.getOpening() == Opening.RIGHT_OPENED || interval.getOpening() == Opening.UNOPENED;

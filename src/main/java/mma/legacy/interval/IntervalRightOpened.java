@@ -108,7 +108,9 @@ public class IntervalRightOpened extends Interval {
 							interval.getOpening() == Opening.UNOPENED;
 		}
 
-		if ( this.doubleEquals(getMaximum(), interval.getMinimum())) { return false; }
+		if ( this.doubleEquals(getMaximum(), interval.getMinimum())) {
+			return false;
+		}
 
 		return this.isNumberIncluded(interval.getMinimum()) || this.isNumberIncluded(interval.getMaximum());
 	}
