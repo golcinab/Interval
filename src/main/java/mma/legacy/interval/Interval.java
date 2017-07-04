@@ -37,6 +37,15 @@ public abstract class Interval {
 	public abstract boolean isIntervalIncluded(Interval interval);
 
 	/**
+	 * Indica si un intervalo se "intersecta" con otro intervalo
+	 * Se considera que intersecta si uno de los limites está dentro del intervalo, y el otro fuera
+	 *
+	 * @param interval intervalo a verificar si intersecta con el intervalo
+	 * @return true si esta en el intervalo, false en caso contrario
+	 */
+	public abstract boolean intersectsWith(Interval interval);
+
+	/**
 	 * Devuelve el punto medio del intervalo
 	 *
 	 * @return el punto medio del intervalo
@@ -65,42 +74,4 @@ public abstract class Interval {
 		return isUnderMaximunLimit(value) && isOverMinimunLimit(value);
 	}
 
-	/**
-	 * Indica si un intervalo se "intersecta" con otro intervalo
-	 * Se considera que intersecta si uno de los limites está dentro del intervalo, y el otro fuera
-	 *
-	 * @param interval intervalo a verificar si intersecta con el intervalo
-	 * @return true si esta en el intervalo, false en caso contrario
-	 */
-	public boolean intersectsWith(Interval interval) {
-		if (this.doubleEquals(minimum, interval.maximum)) {
-			switch (getOpening()) {
-				case BOTH_OPENED:
-				case LEFT_OPENED:
-					return false;
-				case RIGHT_OPENED:
-				case UNOPENED:
-					return interval.getOpening() == Opening.LEFT_OPENED ||
-							interval.getOpening() == Opening.UNOPENED;
-				default:
-					assert false;
-					return false;
-			}
-		}
-		if ( this.doubleEquals(maximum, interval.minimum)) {
-			switch (getOpening()) {
-				case BOTH_OPENED:
-				case RIGHT_OPENED:
-					return false;
-				case LEFT_OPENED:
-				case UNOPENED:
-					return interval.getOpening() == Opening.RIGHT_OPENED ||
-							interval.getOpening() == Opening.UNOPENED;
-				default:
-					assert false;
-					return false;
-			}
-		}
-		return this.isNumberIncluded(interval.minimum) || this.isNumberIncluded(interval.maximum);
-	}
 }

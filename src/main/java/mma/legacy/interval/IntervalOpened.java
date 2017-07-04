@@ -89,4 +89,19 @@ public class IntervalOpened extends Interval {
 		}
 		return result;
 	}
+
+	/**
+	 * Indica si un intervalo se "intersecta" con otro intervalo
+	 * Se considera que intersecta si uno de los limites está dentro del intervalo, y el otro fuera
+	 *
+	 * @param interval intervalo a verificar si intersecta con el intervalo
+	 * @return true si esta en el intervalo, false en caso contrario
+	 */
+	public boolean intersectsWith(Interval interval) {
+		// Este caso se puede simplificar con solo el ultimo return dentro del metodo.
+		if (this.doubleEquals(getMinimum(), interval.getMaximum())) { return false; }
+		if ( this.doubleEquals(getMaximum(), interval.getMinimum())) { return false; }
+
+		return this.isNumberIncluded(interval.getMinimum()) || this.isNumberIncluded(interval.getMaximum());
+	}
 }

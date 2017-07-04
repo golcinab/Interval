@@ -70,6 +70,30 @@ public class IntervalUnopened extends Interval {
 		boolean minimumIncluded = this.isNumberIncluded(interval.getMinimum());
 		boolean maximumIncluded = this.isNumberIncluded(interval.getMaximum());
 
-		return (minimumIncluded || this.doubleEquals(getMinimum(), interval.getMinimum())) && (maximumIncluded || this.doubleEquals(getMaximum(), interval.getMaximum()));
+		boolean bothMinEquals = this.doubleEquals(getMinimum(), interval.getMinimum());
+		boolean bothMaxEquals = this.doubleEquals(getMaximum(), interval.getMaximum());
+
+		return (minimumIncluded || bothMinEquals) && (maximumIncluded || bothMaxEquals);
+	}
+
+	/**
+	 * Indica si un intervalo se "intersecta" con otro intervalo
+	 * Se considera que intersecta si uno de los limites está dentro del intervalo, y el otro fuera
+	 *
+	 * @param interval intervalo a verificar si intersecta con el intervalo
+	 * @return true si esta en el intervalo, false en caso contrario
+	 */
+	public boolean intersectsWith(Interval interval) {
+		if (this.doubleEquals(getMinimum(), interval.getMaximum())) {
+			return interval.getOpening() == Opening.LEFT_OPENED ||
+							interval.getOpening() == Opening.UNOPENED;
+		}
+
+		if ( this.doubleEquals(getMaximum(), interval.getMinimum())) {
+			return interval.getOpening() == Opening.RIGHT_OPENED ||
+							interval.getOpening() == Opening.UNOPENED;
+
+		}
+		return this.isNumberIncluded(interval.getMinimum()) || this.isNumberIncluded(interval.getMaximum());
 	}
 }
